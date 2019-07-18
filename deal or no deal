@@ -1,0 +1,90 @@
+#ShahryaarMohiuddin
+#Deal or no deal
+import random
+
+cases = [1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000, 10000, 25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000, 750000, 1000000]
+
+#empty array that checks which case you have selected
+checkList = []
+
+#value of your case
+yourCase = []
+
+def main():
+	myCase = raw_input("choose a case between 1 and 26")
+
+	if int(myCase) > 26 or int(myCase) < 1:
+		print("boi wut u doing")
+		main() #recursive function
+
+	else: 
+		#find your case
+		Case = random.choice(cases)
+		#remove it from the cases array
+		cases.remove(Case)
+		#add it to yourCase
+		yourCase.append(Case)
+		#put it into checklist
+		checkList.append(Case)
+
+		#Remove function call
+		Remove(myCase, checkList)
+
+def Remove(myCase, Checklist):
+	turns = 3
+	while turns != 0: #while turns does not equal zero
+		print("Heres the available cases:")
+		print(cases) #prints whats left  
+		caseRemove = raw_input("Choose a case to be removed")
+		if int(caseRemove) > 26 or int(caseRemove) < 1:
+			print("1 through 26, stupid")
+
+		if caseRemove in checkList:
+			print("case is taken.")
+		else:
+			Case = random.choice(cases)
+			cases.remove(Case)
+			checkList.append(caseRemove)
+			turn = turn - 1
+	if len(cases) == 1:
+		Banker(myCase, checkList)
+	Banker(mycase, checkList)
+
+def Banker(myCase, checkList):
+	bankOffer = sum(cases)/float(len(cases))
+
+
+	if len(cases) == 1:
+			#asks if you want to see your case or not
+		finalChoice = raw_input("Would you like to see your case (Y)es or (N)o")
+		if finalChoice == "Y" or finalChoice == "N":
+			yourCase2 = sum(yourCase)
+			print ("You won", "$", "%.2f"%yourCase2)
+			main()
+		#taking the bankers offer
+	elif finalChoice == "N" or finalChoice == "n":
+		print("You won", "$", "%.2f"%finalOffer)
+
+	else:
+		print("Invalid Input. BRUH, try again")
+		Banker(myCase, checkList)
+
+	if len(cases) > 1:
+		print("The Banker offers", "$", "%.2f"%bankOffer)
+		offerDecision = raw_input(">")
+
+		if offerDecision == "Y" or offerDecision == "y":
+			print("You\'ve won","$", "%.2f"%bankOffer)
+
+			yourCase2 = sum(yourCase)
+			print("Your case contained", "$", yourCase2)
+			if yourCase2 > bankOffer:
+				print("HA noob, i win loser. take ur money and go")
+		elif offerDecision == "N" or offerDecision == "n":
+			Remove(myCase, checkList)
+		else:
+			print("Invalid Input.")
+			Banker(myCase, checkList)
+main()
+
+
